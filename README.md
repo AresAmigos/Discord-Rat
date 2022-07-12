@@ -14,7 +14,7 @@ First of explicate every single rat command: DON'T USE THIS FOR MAKE ANY BULLSHI
 modify the line 1 and 2 with your bot token and webhook url
 
 
-The prefiss of every command is: )
+The prefiss of every command is: ")"
 
 
 bomb - fills the pc with garbage files
