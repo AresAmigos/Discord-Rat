@@ -3,6 +3,5 @@ discord-webhook
 requests
 pyautogui
 pywin32
-sqlite (can be build-in)
 pycryptodomex
 python-csv
