@@ -8,7 +8,7 @@ A rat that uses discord server (discord bot and a discord webhook) as console, o
 This rat work only on windows
 
 
-First of explicate every single rat command: DON'T USE THIS FOR MAKE ANY BULLSHIT, I DO NOT TAKE ANY RESPONSIBILITY IN THE WAY YOU WILL   USE IT.
+First of explicate every single rat command: DON'T USE THIS FOR MAKE ANY BULLSHIT, I DO NOT TAKE ANY RESPONSIBILITY OF THE WAY YOU WILL USE IT.
 
 
 modify the line 1 and 2 with your bot token and webhook url
