@@ -88,7 +88,7 @@ async def cmdput(ctx,arg):
 async def spamcmd(ctx,arg):
     await ctx.channel.purge(limit=1)
     await ctx.send('Inizializzando apertura terminali...')
-    for i in range(0,int(arg))
+    for i in range(0,int(arg)):
         os.system('start cmd')
     await ctx.send(f"Sono stati aperti {arg} terminali")
 
