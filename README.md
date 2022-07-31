@@ -79,6 +79,12 @@ help - shows all commands
 
 no parameters
 
+
+ifconfig - show ifconfig information except user agent
+
+no parameters
+
+
 input - sends a input on the victim machine keyboard
 
 input Hello (use curly brackets for special keys, example: {enter} {F4})
