@@ -1,8 +1,5 @@
-#token = OTgwNTY2NDM3ODUwNjU2NzY4.GSaXEs.PmUWGZs0kPaBK7trdR9397MYnfwFNF5KbGZETc
-#invite = https://discord.com/api/oauth2/authorize?client_id=980566437850656768&permissions=1642824465911&scope=bot
-#weburl = https://discord.com/api/webhooks/994231041747320952/_K4JA5qualo8t87KlxMOkfQ-ydW60QUQh1RyABT8DUqKct_xwHJaqVZ6wfsLbgdoZBON
-weburl = 'https://discord.com/api/webhooks/993921274621464656/mni0Tt-DFQabEnDkSuqy9Zh3gWyM0hbVTGeYoNoUV7DocsNO3umTnswcPy0u7EfSD3sj'
-botoken = 'OTgwNTY2NDM3ODUwNjU2NzY4.GSaXEs.PmUWGZs0kPaBK7trdR9397MYnfwFNF5KbGZETc'
+weburl = 'ENTER YOUR WEBHOOK URL HERE'
+botoken = 'ENTER YOUR BOT TOKEN HERE'
 
 import discord
 from discord.ext import commands
