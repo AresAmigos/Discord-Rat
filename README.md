@@ -1,4 +1,8 @@
 # Discord-Rat
+
+# Educational purpose only
+
+
 The file is available only in italian (half Italian and half English, lol)
 
 
