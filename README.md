@@ -23,7 +23,7 @@ The prefiss of every command is: ")"
 
 bomb - fills the pc with garbage files
 
-no parameters
+bomb 100 (it will fill the victim machine with 100 unusefull files)
 
 
 cd - change directory
@@ -97,11 +97,6 @@ input Hello (use curly brackets for special keys, example: {enter} {F4})
 lclick - sends x (where x is a number) left click
 
 lclick 20 (will send 20 left clicks)
-
-
-m - use this immediately after sendmsg (rat command)
-
-no parameters
 
 
 mousemad - it will drive the mouse crazy for x (where x is a number) seconds
