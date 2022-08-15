@@ -158,9 +158,6 @@ async def rclick(ctx,arg):
         await ctx.send(f"Sono stati inviati {arg} click destri")  
 
 
-    await ctx.send("Matrix finito")
-    
-
 
 @client.command()
 async def mousemad(ctx,arg):
