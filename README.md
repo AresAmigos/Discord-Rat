@@ -109,6 +109,11 @@ msgboxE - spam the screen of victim machine with error windows
 msgboxE 5 (will spam 5 error messages on the victim machine)
 
 
+)noescape - play "a song"
+
+no parameters
+
+
 ping - check the connection speed of the victim machine by sending the output to a text file on discord
 
 ping 4 (sends 4 packages)
