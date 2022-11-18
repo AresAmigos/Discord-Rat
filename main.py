@@ -199,8 +199,6 @@ async def rclick(ctx,arg=None):
         else:
             await ctx.send(f"Sono stati inviati {arg} click destri")  
 
-
-    await ctx.send("Matrix finito")
     
 
 
