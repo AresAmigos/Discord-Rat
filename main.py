@@ -1,5 +1,5 @@
-weburl = 'https://discord.com/api/webhooks/994231041747320952/_K4JA5qualo8t87KlxMOkfQ-ydW60QUQh1RyABT8DUqKct_xwHJaqVZ6wfsLbgdoZBON'
-botoken = 'OTgwNTY2NDM3ODUwNjU2NzY4.GuxK4Q.q9V5FTfQRuiPnVmOnsUxRqelZVrie5EMkNgyMk'
+weburl = 'ENTER WEBHOOK URL'
+botoken = "ENTER TOKEN BOT"
 import discord
 from discord.ext import commands
 from discord_webhook import DiscordWebhook
